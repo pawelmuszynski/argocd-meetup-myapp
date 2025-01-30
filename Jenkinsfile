@@ -21,9 +21,10 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                script {
-                    sh "docker build -t ${IMAGE_NAME}:${SHORT_COMMIT_HASH} ."
-                }
+	      docker.withRegistry(https://docker.io/pmuszynski, dockerhubcreds) {
+	          docker.build('myapp').push(${SHORT_COMMIT_HASH})
+#                    sh "docker build -t ${IMAGE_NAME}:${SHORT_COMMIT_HASH} ."
+	      }
             }
         }
 
