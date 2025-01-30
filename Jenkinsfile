@@ -21,7 +21,7 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-	      docker.withRegistry(https://docker.io/pmuszynski, dockerhubcreds) {
+	      docker.withRegistry('https://docker.io/pmuszynski', 'dockerhubcreds') {
 	          docker.build('myapp').push(${SHORT_COMMIT_HASH})
 //                    sh "docker build -t ${IMAGE_NAME}:${SHORT_COMMIT_HASH} ."
 	      }
