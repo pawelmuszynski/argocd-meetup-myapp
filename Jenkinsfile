@@ -23,7 +23,7 @@ pipeline {
             steps {
 	      script {
 	          docker.withRegistry('https://docker.io/pmuszynski', 'dockerhubcreds') {
-	              docker.build('myapp').push(${SHORT_COMMIT_HASH})
+	              docker.build('myapp', "--build-arg BUILD_VERSION=${SHORT_COMMIT_HASH}").push(${SHORT_COMMIT_HASH})
 	          }
             }
 	    }
