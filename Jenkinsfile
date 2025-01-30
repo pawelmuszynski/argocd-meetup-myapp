@@ -8,8 +8,8 @@ pipeline {
     stages {
         stage('Install docker') {
 	  steps {
-	    sh 'apt update'
-	    sh 'apt install -y docker.io'
+	    sh 'sudo apt update'
+	    sh 'sudo apt install -y docker.io'
 	  }
 	}
         stage('Checkout') {
