@@ -30,10 +30,7 @@ pipeline {
         stage('Push to Docker Registry') {
             steps {
                 script {
-                    // Logowanie do rejestru Docker (wymaga podania danych logowania w Jenkinsie)
                     sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin'
-
-                    // Wypchnięcie obrazu do rejestru
                     sh "docker push ${IMAGE_NAME}:${SHORT_COMMIT_HASH}"
                 }
             }
@@ -42,15 +39,13 @@ pipeline {
 
     post {
         always {
-            // Wylogowanie z rejestru i czyszczenie
             sh 'docker logout'
         }
         success {
-            echo 'Pipeline zakończony sukcesem!'
+            echo 'SUCCESS!'
         }
         failure {
-            echo 'Pipeline nie powiódł się.'
+            echo 'FAIL!'
         }
     }
 }
-Ważne inf
