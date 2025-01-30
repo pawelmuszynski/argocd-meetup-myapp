@@ -1,17 +1,13 @@
 pipeline {
-    agent any
+    agent {
+        docker { image 'jenkinsci/docker-agent' }
+    }
 
     environment {
         IMAGE_NAME = 'pmuszynski/myapp'
     }
 
     stages {
-        stage('Install docker') {
-	  steps {
-	    sh 'sudo apt update'
-	    sh 'sudo apt install -y docker.io'
-	  }
-	}
         stage('Checkout') {
             steps {
                 checkout scm
