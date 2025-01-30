@@ -19,31 +19,19 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Build and Push Docker Image') {
             steps {
 	      script {
-	      docker.withRegistry('https://docker.io/pmuszynski', 'dockerhubcreds') {
-	          docker.build('myapp').push(${SHORT_COMMIT_HASH})
-//                    sh "docker build -t ${IMAGE_NAME}:${SHORT_COMMIT_HASH} ."
-	      }
+	          docker.withRegistry('https://docker.io/pmuszynski', 'dockerhubcreds') {
+	              docker.build('myapp').push(${SHORT_COMMIT_HASH})
+	          }
             }
 	    }
         }
 
-        stage('Push to Docker Registry') {
-            steps {
-                script {
-                    sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin'
-                    sh "docker push ${IMAGE_NAME}:${SHORT_COMMIT_HASH}"
-                }
-            }
-        }
     }
 
     post {
-        always {
-            sh 'docker logout'
-        }
         success {
             echo 'SUCCESS!'
         }
